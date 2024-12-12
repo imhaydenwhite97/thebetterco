@@ -1,94 +1,124 @@
 <?php
-/* Template Name: Login-Signup */
+/*
+Template Name: Login/Signup
+*/
+
+// Add body class for login page
+add_filter('body_class', function($classes) {
+    return array_merge($classes, array('login-signup-page'));
+});
+
+get_header();
+
+// Check if user is already logged in
 if (is_user_logged_in()) {
-    wp_redirect(home_url('/dashboard')); // Redirect logged-in users to the dashboard
+    wp_redirect(home_url());
     exit;
 }
-get_header();
+
+// Initialize variables
+$login_error = '';
+$register_error = '';
+$register_success = '';
+
+// Handle login form submission
+if (isset($_POST['login_submit'])) {
+    $creds = array(
+        'user_login'    => $_POST['login_username'],
+        'user_password' => $_POST['login_password'],
+        'remember'      => true
+    );
+
+    $user = wp_signon($creds, false);
+
+    if (is_wp_error($user)) {
+        $login_error = $user->get_error_message();
+    } else {
+        wp_redirect(home_url());
+        exit;
+    }
+}
+
+// Handle registration form submission
+if (isset($_POST['register_submit'])) {
+    $username = sanitize_user($_POST['register_username']);
+    $email = sanitize_email($_POST['register_email']);
+    $password = $_POST['register_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if ($password !== $confirm_password) {
+        $register_error = "Passwords do not match.";
+    } elseif (username_exists($username)) {
+        $register_error = "Username already exists.";
+    } elseif (email_exists($email)) {
+        $register_error = "Email already exists.";
+    } else {
+        $user_id = wp_create_user($username, $password, $email);
+        if (!is_wp_error($user_id)) {
+            $register_success = "Registration successful! You can now log in.";
+            // Optional: automatically log in the user
+            $creds = array(
+                'user_login'    => $username,
+                'user_password' => $password,
+                'remember'      => true
+            );
+            $user = wp_signon($creds, false);
+            if (!is_wp_error($user)) {
+                wp_redirect(home_url());
+                exit;
+            }
+        } else {
+            $register_error = $user_id->get_error_message();
+        }
+    }
+}
 ?>
 
-<style>
-/* Inline styles for simplicity - move to style.css for better organization */
-.login-signup-container {
-    display: flex;
-    height: 100vh;
-}
-.login-signup-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f8f8f8;
-}
-.login-signup-right {
-    flex: 1;
-    background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/your-photo.jpg');
-    background-size: cover;
-    background-position: center;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-form input {
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-}
-button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-</style>
-
 <div class="login-signup-container">
-    <div class="login-signup-left">
-        <h1>Welcome to The Better Co.</h1>
-        <p>Choose an option below:</p>
-        <button id="login-btn">Log In</button>
-        <button id="signup-btn">Sign Up</button>
-
+    <div class="forms-container">
         <!-- Login Form -->
-        <form id="login-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST" style="display: none;">
-            <input type="hidden" name="action" value="user_login">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Log In</button>
-        </form>
+        <div class="login-section">
+            <h2>Login</h2>
+            <?php if ($login_error) : ?>
+                <div class="error-message"><?php echo $login_error; ?></div>
+            <?php endif; ?>
+            <form method="post" action="" class="login-form">
+                <div class="form-group">
+                    <input type="text" name="login_username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="login_password" placeholder="Password" required>
+                </div>
+                <button type="submit" name="login_submit">Login</button>
+            </form>
+        </div>
 
-        <!-- Signup Form -->
-        <form id="signup-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST" style="display: none;">
-            <input type="hidden" name="action" value="user_signup">
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="number" name="age" placeholder="Age" required>
-            <input type="text" name="phone" placeholder="Phone Number" required>
-            <input type="text" name="address" placeholder="Address" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
+        <!-- Registration Form -->
+        <div class="register-section">
+            <h2>Register</h2>
+            <?php if ($register_error) : ?>
+                <div class="error-message"><?php echo $register_error; ?></div>
+            <?php endif; ?>
+            <?php if ($register_success) : ?>
+                <div class="success-message"><?php echo $register_success; ?></div>
+            <?php endif; ?>
+            <form method="post" action="" class="register-form">
+                <div class="form-group">
+                    <input type="text" name="register_username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="register_email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="register_password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" name="register_submit">Register</button>
+            </form>
+        </div>
     </div>
-    <div class="login-signup-right"></div>
 </div>
-
-<script>
-document.getElementById('login-btn').addEventListener('click', () => {
-    document.getElementById('login-form').style.display = 'flex';
-    document.getElementById('signup-form').style.display = 'none';
-});
-document.getElementById('signup-btn').addEventListener('click', () => {
-    document.getElementById('signup-form').style.display = 'flex';
-    document.getElementById('login-form').style.display = 'none';
-});
-</script>
 
 <?php get_footer(); ?>

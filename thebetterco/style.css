@@ -1,21 +1,323 @@
 /*
-Theme Name: The Better Co.
-Theme URI: http://thebetterco.co/
+Theme Name: The Better Co
+Theme URI: https://thebetterco.com
 Author: Hayden White
-Author URI: http://yourwebsite.com/
-Description: A custom theme for The Better Co.
+Description: A custom theme for The Better Co
 Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: thebetterco
 */
 
-
-form input, form button {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-form input:focus, form button:focus {
-    outline: none;
-    border-color: #007BFF;
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: #111;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Hero Section */
+.hero {
+    padding: 160px 0 120px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.hero h1 {
+    font-size: 76px;
+    line-height: 1;
+    margin-bottom: 24px;
+    font-weight: 600;
+    letter-spacing: -2px;
+}
+
+.hero-subtitle {
+    font-size: 28px;
+    color: #666;
+    margin-bottom: 48px;
+    font-weight: 400;
+}
+
+/* Features Section */
+.features {
+    padding: 120px 0;
+    background-color: #fafafa;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+}
+
+.feature-item {
+    text-align: left;
+    padding: 0;
+}
+
+.feature-item h3 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.feature-item p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Investment Series */
+.investment-series {
+    padding: 120px 0;
+    background-color: #fff;
+}
+
+.investment-series h2 {
+    font-size: 48px;
+    margin-bottom: 64px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.series-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.series-item {
+    padding: 48px;
+    border-radius: 12px;
+    background-color: #fafafa;
+    transition: transform 0.2s ease;
+}
+
+.series-item:hover {
+    transform: translateY(-4px);
+}
+
+.series-item h3 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.series-item p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+/* CTA Buttons */
+.cta-button {
+    display: inline-block;
+    padding: 20px 40px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: #333;
+}
+
+.learn-more {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.learn-more:hover {
+    text-decoration: underline;
+}
+
+/* CTA Section */
+.cta {
+    padding: 160px 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+.cta h2 {
+    font-size: 48px;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+.cta p {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 48px;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .hero h1 {
+        font-size: 64px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 48px;
+    }
+    
+    .hero-subtitle {
+        font-size: 24px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .series-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Navigation Styles */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    transition: transform 0.3s ease;
+}
+
+.main-nav {
+    padding: 20px 0;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid #f4f4f5;
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 32px;
+    width: auto;
+    margin: -4px 0;
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-login {
+    color: #111;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: color 0.2s ease;
+}
+
+.nav-login:hover {
+    color: #666;
+}
+
+.nav-signup {
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-signup:hover {
+    background: #333;
+}
+
+.secondary-nav {
+    background: #fff;
+    height: 48px;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-hidden .secondary-nav {
+    transform: translateY(-48px);
+}
+
+.page-links {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.main-links {
+    margin-right: auto;
+    display: flex;
+    gap: 40px;
+}
+
+.secondary-links {
+    display: flex;
+    gap: 32px;
+}
+
+.main-links a,
+.secondary-links a {
+    color: #111;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.main-links a:hover,
+.secondary-links a:hover {
+    color: #666;
+}
+
+/* Container for consistent width */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .secondary-nav {
+        display: none;
+    }
+    
+    .nav-buttons {
+        gap: 8px;
+    }
 }
