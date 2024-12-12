@@ -219,9 +219,9 @@ body {
 }
 
 .logo img {
-    height: 32px;
+    height: 125px;
     width: auto;
-    margin: -4px 0;
+    margin: -25px 0;
 }
 
 .nav-buttons {
@@ -258,29 +258,34 @@ body {
 
 .secondary-nav {
     background: #fff;
-    height: 48px;
+    height: 60px;
     transform: translateY(0);
     transition: transform 0.3s ease;
     position: absolute;
     width: 100%;
     top: 100%;
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid #f4f4f5;
 }
 
 .nav-hidden .secondary-nav {
-    transform: translateY(-48px);
+    transform: translateY(-60px);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
 }
 
 .page-links {
-    height: 100%;
-    width: 100%;
     display: flex;
+    justify-content: space-between;
+    height: 100%;
     align-items: center;
 }
 
 .main-links {
-    margin-right: auto;
     display: flex;
     gap: 40px;
 }
@@ -297,18 +302,14 @@ body {
     font-size: 15px;
     font-weight: 500;
     transition: color 0.2s ease;
+    display: inline-block;
+    height: 100%;
+    line-height: 48px;
 }
 
 .main-links a:hover,
 .secondary-links a:hover {
     color: #666;
-}
-
-/* Container for consistent width */
-.container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
 }
 
 /* Media Queries */

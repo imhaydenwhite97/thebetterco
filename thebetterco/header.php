@@ -27,7 +27,7 @@
     
     <div class="secondary-nav">
         <div class="container">
-            <nav class="page-links">
+            <div class="page-links">
                 <div class="main-links">
                     <a href="/invest">Invest</a>
                     <a href="/properties">Properties</a>
@@ -38,7 +38,7 @@
                     <a href="/about">About</a>
                     <a href="/help">Help</a>
                 </div>
-            </nav>
+            </div>
         </div>
     </div>
 </header>
