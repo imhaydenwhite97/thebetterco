@@ -218,11 +218,21 @@ body {
     justify-content: space-between;
 }
 
-.logo img {
-    height: 125px;
-    width: auto;
-    margin: -25px 0;
+/* Previous styles remain the same */
+
+.logo {
+    display: flex;
+    align-items: center;
 }
+
+.logo img {
+    height: 30px; /* Increased size */
+    width: auto;
+    display: block; /* Removes unwanted space */
+    vertical-align: middle;
+}
+
+/* Rest of your styles remain the same */
 
 .nav-buttons {
     display: flex;
